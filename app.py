@@ -189,30 +189,35 @@ def logout():
 @app.route('/history', methods=['POST', 'GET'])
 #@login_required
 def history():
-    currentuser = session['user']
-    user = User.query.filter_by(username=currentuser).first()
-    if request.method == 'POST':
-        requestedusername = request.form['userquery']
-        requesteduserdata = User.query.filter_by(username=requestedusername).first()
-        chosenqueries = Query.query.filter_by(user_id=requesteduserdata.id).all()
-        numqueries = len(chosenqueries)
-        return render_template('queryhistory.html', queries=chosenqueries, user=user, numqueries=numqueries)
+    if 'logged_in' in session:
+        currentuser = session['user']
+        user = User.query.filter_by(username=currentuser).first()
+        if request.method == 'POST':
+            requestedusername = request.form['userquery']
+            requesteduserdata = User.query.filter_by(username=requestedusername).first()
+            chosenqueries = Query.query.filter_by(user_id=requesteduserdata.id).all()
+            numqueries = len(chosenqueries)
+            return render_template('queryhistory.html', queries=chosenqueries, user=user, numqueries=numqueries)
+        else:
+            queries = Query.query.filter_by(user_id=user.id).all()
+            numqueries=len(queries)
+            return render_template('queryhistory.html', queries=queries, user=user, numqueries=numqueries)
     else:
-        queries = Query.query.filter_by(user_id=user.id).all()
-        numqueries=len(queries)
-        return render_template('queryhistory.html', queries=queries, user=user, numqueries=numqueries)
-
+        errorMess = 'You need to login first.'
+        return errorMess, status.HTTP_401_UNAUTHORIZED
 
 @app.route('/history/query<int:querynum>')
 #@login_required
 def query(querynum):
-    print(querynum)
-    currentuser = session['user']
-    user = User.query.filter_by(username=currentuser).first()
-    query = Query.query.filter_by(id=querynum).first()
-    numqueries = None
-    return render_template('queryhistory.html', query=query, user=user, numqueries=numqueries)
-
+    if 'logged_in' in session:
+        currentuser = session['user']
+        user = User.query.filter_by(username=currentuser).first()
+        query = Query.query.filter_by(id=querynum).first()
+        numqueries = None
+        return render_template('queryhistory.html', query=query, user=user, numqueries=numqueries)
+    else:
+        errorMess = 'You need to login first.'
+        return errorMess, status.HTTP_401_UNAUTHORIZED
 
 @app.route('/login_history', methods=['POST', 'GET'])
 #@admin_required
