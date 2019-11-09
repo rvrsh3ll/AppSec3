@@ -213,7 +213,7 @@ def query(querynum):
         currentuser = session['user']
         user = User.query.filter_by(username=currentuser).first()
         query = Query.query.filter_by(id=querynum).first()
-        if (query.bruser == user.id):
+        if ((query.bruser == user.id) or user.isadmin):
             numqueries = None
             return render_template('queryhistory.html', query=query, user=user, numqueries=numqueries)
         else:
