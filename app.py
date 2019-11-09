@@ -213,8 +213,12 @@ def query(querynum):
         currentuser = session['user']
         user = User.query.filter_by(username=currentuser).first()
         query = Query.query.filter_by(id=querynum).first()
-        numqueries = None
-        return render_template('queryhistory.html', query=query, user=user, numqueries=numqueries)
+        if (query.bruser == user.id):
+            numqueries = None
+            return render_template('queryhistory.html', query=query, user=user, numqueries=numqueries)
+        else:
+            errorMess = 'You cannot view queries for other users.'
+            return errorMess, status.HTTP_401_UNAUTHORIZED
     else:
         errorMess = 'You need to login first.'
         return errorMess, status.HTTP_401_UNAUTHORIZED
