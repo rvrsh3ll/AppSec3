@@ -9,15 +9,15 @@
       <form action="" method="post">
         <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
         <input type="text" placeholder="Username" name="uname" id="uname" value="{{ request.form.uname }}">
-        <input type="password" placeholder="Password" name="pword" id = "pword" value="{{ request.form.pword }}">
+        <input type="password" placeholder="Password" name="pword" id="pword" value="{{ request.form.pword }}">
         <input type="password" placeholder="2fa" name="2fa" id="2fa" value="{{ request.form.dosfa }}">
         <input class="btn btn-default" type="submit" value="register">
       </form>
       <br>
       {% if message %}
-      <p1 id='success'> {{ message }}</p1>
+      <p id="success">{{ message }}</p>
       {% endif %}
       <br>
-      <p2>Click <a href="/login">here</a> to log in.</p2>
+      <p>Click <a href="/login">here</a> to log in.</p>
   </body>
 </html>
