@@ -14,11 +14,11 @@ from datetime import datetime
 
 
 app = Flask(__name__)
-talisman = Talisman(app)
+talisman = Talisman(app, force_https=False)
 
 app.config.from_object('config.DefaultConfig')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///spell.db'
-db = SQLAlchemy(app, force_https=False)
+db = SQLAlchemy(app)
 
 
 class User(db.Model):
