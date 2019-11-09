@@ -18,7 +18,7 @@ talisman = Talisman(app)
 
 app.config.from_object('config.DefaultConfig')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///spell.db'
-db = SQLAlchemy(app)
+db = SQLAlchemy(app, force_https=False)
 
 
 class User(db.Model):
