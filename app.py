@@ -105,7 +105,7 @@ def home():
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
-    message = None
+    message = ' '
     if request.method == 'POST':
         user = request.form['uname']
         pwd = pbkdf2_sha256.hash(request.form['pword'])
@@ -123,7 +123,7 @@ def register():
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    error = None
+    error = ' ' 
     if request.method == 'POST':
         #verify login credentials
         provideduser = request.form['uname']
