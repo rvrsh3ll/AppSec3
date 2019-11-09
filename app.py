@@ -6,7 +6,7 @@ from flask_wtf.csrf import CSRFProtect
 import subprocess
 import os
 from passlib.hash import sha256_crypt, pbkdf2_sha256
-from flask_talisman import Talisman
+#from flask_talisman import Talisman
 from flask_sqlalchemy import SQLAlchemy
 #from flask_sqlalchemy.exc import IntegrityError
 from datetime import datetime
@@ -14,7 +14,7 @@ from datetime import datetime
 
 
 app = Flask(__name__)
-talisman = Talisman(app, force_https=False)
+#talisman = Talisman(app, force_https=False)
 
 app.config.from_object('config.DefaultConfig')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///spell.db'
