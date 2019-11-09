@@ -15,21 +15,20 @@
         <input class="btn btn-default" type="submit" value="View Queries">
       </form>
       <br>
-    {% else %}
+    {% endif %}
     <br>
-    	{% if numqueries %}
-    	<p id=numqueries>{{ numqueries }}</p>
-    	{% endif %}
-    	<br>
-        {% for query in queries %}
-      		<li id="query{{query.id}}"><a href="/history/query{{query.id}}">{{ query }}</a></li>
-        {% endfor %}
-        {% if query %}
+    {% if numqueries %}
+    <p id=numqueries>{{ numqueries }}</p>
+    {% endif %}
+    <br>
+    {% for query in queries %}
+    	<li id="query{{query.id}}"><a href="/history/query{{query.id}}">{{ query }}</a></li>
+    {% endfor %}
+    {% if query %}
         <p id='queryid'>{{ query.id }}</p>
         <p id='username'>{{ query.bruser.username }}</p>
         <p id='querytext'>{{ query.submission }}</p>
         <p id='queryresults'>{{ query.results }}</p>
-        {% endif %}
     {% endif %}
     </div>
   </body>

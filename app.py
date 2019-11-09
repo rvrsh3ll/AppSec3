@@ -193,13 +193,14 @@ def history():
     user = User.query.filter_by(username=currentuser).first()
     if request.method == 'POST':
         requestedusername = request.form['userquery']
-        requesteduserdata = User.query.filter_by(username=currentuser).first()
-        queries = Query.query.filter_by(user_id=requesteduserdata.id).all()
-        numqueries = len(queries)
+        requesteduserdata = User.query.filter_by(username=requestedusername).first()
+        chosenqueries = Query.query.filter_by(user_id=requesteduserdata.id).all()
+        numqueries = len(chosenqueries)
+        return render_template('queryhistory.html', queries=chosenqueries, user=user, numqueries=numqueries)
+    else:
+        queries = Query.query.filter_by(user_id=user.id).all()
+        numqueries=len(queries)
         return render_template('queryhistory.html', queries=queries, user=user, numqueries=numqueries)
-    queries = Query.query.filter_by(user_id=user.id).all()
-    numqueries=len(queries)
-    return render_template('queryhistory.html', queries=queries, user=user, numqueries=numqueries)
 
 
 @app.route('/history/query<int:querynum>')
