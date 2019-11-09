@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>Login History</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Type username below to view history.</h1>
+      <br>
+      <form action="" method="post">
+        <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="text" placeholder="Username" name="userid" id="userid" value="{{
+          request.form.userid }}">
+        <input class="btn btn-default" type="submit" value="View Logs">
+      </form>
+      <br>
+      {% for log in logs %}
+      <p id="login{{log.id}}"> {{ log.id }}</p>
+      <p id='login{{log.id}}_time'> {{ log.login }}</p>
+      <p id='logout{{log.id}}_time'> {{ log.logout }} </p>
+      {% endfor %}
+      <p2>Click <a href="/logout">here</a> to log out.</p2>
+    </div>
+  </body>
+</html>

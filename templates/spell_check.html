@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <title>Spell Check</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Submit text below.</h1>
+      <br>
+      <form action="" method="post">
+        <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="text" placeholder="Add text here." name="inputtext" id="inputtext" value="{{
+          request.form.inputtext }}">
+        <input class="btn btn-default" type="submit" value="Spell Check">
+      </form>
+      <br>
+      {% if txt %}
+      <p id="textout"> {{ txt }}</p>
+      {% endif %}
+      {% if misspelled %}
+      <p id="misspelled"> {{ misspelled }}</p>
+      {% endif %}
+      <p2>Click <a href="/logout">here</a> to log out.</p2>
+    </div>
+  </body>
+</html>

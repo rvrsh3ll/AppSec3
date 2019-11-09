@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>Query History</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <div class="container">
+    {% if user.isadmin %}
+      <h1>Type username below to view history.</h1>
+      <br>
+      <form action="" method="post">
+        <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="text" placeholder="Username" name="userquery" id="userquery" value="{{
+          request.form.userquery }}">
+        <input class="btn btn-default" type="submit" value="View Queries">
+      </form>
+      <br>
+    {% else %}
+    <br>
+    	{% if numqueries %}
+    	<p id=numqueries>{{ numqueries }}</p>
+    	{% endif %}
+    	<br>
+        {% for query in queries %}
+      		<li id="query{{query.id}}"><a href="/history/query{{query.id}}">{{ query }}</a></li>
+        {% endfor %}
+        {% if query %}
+        <p id='queryid'>{{ query.id }}</p>
+        <p id='username'>{{ query.bruser.username }}</p>
+        <p id='querytext'>{{ query.submission }}</p>
+        <p id='queryresults'>{{ query.results }}</p>
+        {% endif %}
+    {% endif %}
+    </div>
+  </body>
+</html>

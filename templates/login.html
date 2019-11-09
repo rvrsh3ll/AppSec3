@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title>Spell Check Login Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Please log in.</h1>
+      <br>
+      <form action="" method="post">
+        <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}"/>
+        <input type="text" placeholder="Username" name="uname" id="uname" value="{{
+          request.form.uname }}">
+         <input type="password" placeholder="Password" name="pword" id="pword" value="{{
+          request.form.pword }}">
+         <input type="password" placeholder="2fa" name="2fa" id="2fa" value="{{
+          request.form.dosfa }}">
+        <input class="btn btn-default" type="submit" value="Login">
+      </form>
+      <br>
+      {% if error %}
+      <p id="result"> {{ error }}</p>
+      {% endif %}
+      <br>
+      <p2>Click <a href="/spell_check">here</a> to use spell checker</p2>
+      <br>
+      <p3>Click <a href="/logout">here</a> to log out.</p3>
+      
+    </div>
+  </body>
+</html>
