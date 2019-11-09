@@ -105,7 +105,7 @@ def home():
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
-    message = ' '
+    success = ' '
     if request.method == 'POST':
         user = request.form['uname']
         pwd = pbkdf2_sha256.hash(request.form['pword'])
@@ -114,16 +114,16 @@ def register():
         if (db.session.query(User.id).filter_by(username=user).scalar() is None):
             db.session.add(User(username=user, password=pwd, twofa=mfa))
             db.session.commit()
-            message = "success"
+            success = 'success'
         else:
-            message = "failure"
+            success = 'failure'
             #flash('Failure')
-    return render_template('register.html', message=message)
+    return render_template('register.html', success=success)
 
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    error = ' ' 
+    result = ' ' 
     if request.method == 'POST':
         #verify login credentials
         provideduser = request.form['uname']
@@ -132,12 +132,12 @@ def login():
         providedmfa = request.form['2fa']
         user = User.query.filter_by(username=provideduser).first()
         if (db.session.query(User.id).filter_by(username=provideduser).scalar() is None):
-            error = 'Incorrect'
+            result = 'Incorrect'
         elif not(pbkdf2_sha256.verify(str(providedpwd), user.password)):
         #elif pwd != Users[user]['pass']:
-            error = 'Incorrect'
+            result = 'Incorrect'
         elif providedmfa != user.twofa:
-            error = "Two-factor failure"
+            result = 'Two-factor failure'
         else:
             #Set sessionID on success
             session['logged_in'] = True
@@ -145,8 +145,8 @@ def login():
             db.session.add(Logs(user_id=user.id, login=datetime.utcnow(), logout=None))
             db.session.commit()
             #add success message here
-            error = 'success'
-    return render_template('login.html', error=error)
+            result = 'success'
+    return render_template('login.html', result=result)
     
 
 @app.route('/spell_check', methods=['POST', 'GET'])
