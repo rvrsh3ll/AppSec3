@@ -150,7 +150,7 @@ def login():
     
 
 @app.route('/spell_check', methods=['POST', 'GET'])
-@login_required
+#@login_required
 def spell_check():
     misspelled = None
     txt = None
@@ -187,7 +187,7 @@ def logout():
 
 
 @app.route('/history', methods=['POST', 'GET'])
-@login_required
+#@login_required
 def history():
     currentuser = session['user']
     user = User.query.filter_by(username=currentuser).first()
@@ -203,7 +203,7 @@ def history():
 
 
 @app.route('/history/query<int:querynum>')
-@login_required
+#@login_required
 def query(querynum):
     print(querynum)
     currentuser = session['user']
@@ -214,7 +214,7 @@ def query(querynum):
 
 
 @app.route('/login_history', methods=['POST', 'GET'])
-@admin_required
+#@admin_required
 def login_history():
     logs = []
     if request.method == 'POST':
